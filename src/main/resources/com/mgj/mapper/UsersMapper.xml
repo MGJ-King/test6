@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mgj.mapper.UsersMapper">
+    <!-- 配置查询所有的user信息 (sql语句) -->
+    <select id="findAllUser" resultType="com.mgj.entity.Users">
+        select * from users
+    </select>
+
+    <!-- 配置添加user (sql语句) -->
+    <insert id="saveUser" parameterType="com.mgj.entity.Users">
+        insert into users(usercode,username,department)values(#{usercode},#{username},#{department})
+        <!-- 配置插入操作后，获取所插入的数据的id -->
+        <selectKey keyProperty="id" keyColumn="id" resultType="Integer" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <!-- 配置删除user (sql语句) -->
+    <delete id="delUserByUsercode" parameterType="String">
+        delete from users where usercode=#{usercode}
+    </delete>
+</mapper>
